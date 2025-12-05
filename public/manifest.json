@@ -1,0 +1,20 @@
+{
+  "name": "MasalaVault",
+  "short_name": "MasalaVault",
+  "description": "Your Spice Vault, Your Recipes - Indian Cooking Companion",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050010",
+  "theme_color": "#f97316",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["food", "lifestyle", "utilities"]
+}
+

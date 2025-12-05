@@ -1,5 +1,5 @@
 {
-  "name": "pantrychef",
+  "name": "masalavault",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,10 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "lucide-react": "^0.555.0",
+    "motion": "^12.23.25",
     "next": "16.0.7",
+    "ogl": "^1.0.11",
     "react": "19.2.0",
     "react-dom": "19.2.0"
   },
