@@ -9,6 +9,7 @@ import React, {
 } from 'react';
 import dynamic from 'next/dynamic';
 import Dock from '@/components/Dock';
+import MobileDock from '@/components/MobileDock';
 import Aurora from '@/components/Aurora';
 import { ToastContainer, useToast } from '@/components/Toast';
 import EmptyState from '@/components/EmptyState';
@@ -1467,46 +1468,34 @@ const App = () => {
     () => [
       {
         label: 'Home',
-        icon: (
-          <Home
-            size={18}
-            className={currentView === 'home' ? 'text-orange-400' : 'text-slate-300'}
-          />
-        ),
+        color: 'orange',
+        icon: <Home size={20} />,
         onClick: () => setCurrentView('home'),
+        isActive: currentView === 'home',
       },
       {
         label: 'Saved',
-        icon: (
-          <Heart
-            size={18}
-            className={currentView === 'saved' ? 'text-orange-400' : 'text-slate-300'}
-          />
-        ),
+        color: 'red',
+        icon: <Heart size={20} fill={currentView === 'saved' ? 'currentColor' : 'none'} />,
         onClick: () => setCurrentView('saved'),
+        isActive: currentView === 'saved',
       },
       {
         label: 'History',
-        icon: (
-          <History
-            size={18}
-            className={currentView === 'history' ? 'text-orange-400' : 'text-slate-300'}
-          />
-        ),
+        color: 'blue',
+        icon: <History size={20} />,
         onClick: () => setCurrentView('history'),
+        isActive: currentView === 'history',
       },
       {
         label: 'List',
-        icon: (
-          <ClipboardList
-            size={18}
-            className={currentView === 'shopping' ? 'text-orange-400' : 'text-slate-300'}
-          />
-        ),
+        color: 'green',
+        icon: <ClipboardList size={20} />,
         onClick: () => setCurrentView('shopping'),
+        isActive: currentView === 'shopping',
       },
     ],
-    [currentView] // only rebuild when the active tab changes
+    [currentView]
   );
 
   useEffect(() => {
@@ -2129,11 +2118,11 @@ const App = () => {
         />
       </div>
       {/* Fixed glass header */}
-      <header className="fixed top-0 left-0 right-0 z-40 px-3 sm:px-4 md:px-6 pt-3 sm:pt-4 pointer-events-none">
+      <header className="fixed top-0 left-0 right-0 z-40 px-3 sm:px-4 md:px-6 pt-2 sm:pt-3 md:pt-4 pointer-events-none">
         <div
           className={`
             max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-3 md:gap-5
-            rounded-2xl border px-4 md:px-6 py-2.5
+            rounded-xl sm:rounded-2xl border px-3 sm:px-4 md:px-6 py-2 sm:py-2.5
             transition-all duration-300 ease-out
             backdrop-blur-2xl bg-gradient-to-r from-white/[0.07] to-white/[0.04] border-white/[0.08]
             transform-gpu will-change-transform
@@ -2150,11 +2139,11 @@ const App = () => {
             <div className="bg-gradient-to-tr from-orange-500 to-red-600 p-2 sm:p-2.5 rounded-xl sm:rounded-2xl text-white shadow-lg shadow-orange-500/30 ring-1 ring-white/10">
               <ChefHat size={20} className="sm:w-6 sm:h-6" strokeWidth={2.5} />
             </div>
-            <div className="leading-tight hidden sm:block">
-              <h1 className="text-xl font-bold tracking-tight cal-sans-regular bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
+            <div className="leading-tight">
+              <h1 className="text-base sm:text-xl font-bold tracking-tight cal-sans-regular bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
                 MasalaVault
               </h1>
-              <p className="text-[9px] text-orange-300/90 font-semibold uppercase tracking-[0.25em]">
+              <p className="text-[8px] sm:text-[9px] text-orange-300/90 font-semibold uppercase tracking-[0.25em] hidden sm:block">
                 YOUR SPICE VAULT, YOUR RECIPES
               </p>
             </div>
@@ -2446,7 +2435,7 @@ const App = () => {
         "
       />
       {/* MAIN CONTENT */}
-      <main id="main-content" className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 pb-24 lg:pb-20 pt-20 sm:pt-24 md:pt-28 font-sans text-slate-200" role="main" aria-label="Main content">
+      <main id="main-content" className="max-w-7xl mx-auto px-4 sm:px-4 md:px-6 pb-28 lg:pb-20 pt-20 sm:pt-24 md:pt-28 font-sans text-slate-200" role="main" aria-label="Main content">
         {/* This wrapper applies the fade ONLY to the content */}
         <div
           className="relative grid lg:grid-cols-12 gap-4 md:gap-6"
@@ -3329,8 +3318,8 @@ const App = () => {
             {/* RIGHT COLUMN: RECIPE GRID */}
             <div className="lg:col-span-8 col-span-12">
                {/* Mobile Pantry Input */}
-               <div className="lg:hidden mb-5">
-                 <div className="p-3 rounded-2xl border flex gap-2 bg-white/[0.04] border-white/[0.08] backdrop-blur-xl">
+               <div className="lg:hidden mb-4">
+                 <div className="p-3 rounded-xl border flex gap-2 bg-white/[0.04] border-white/[0.08] backdrop-blur-xl">
                     <input 
                       value={inputValue}
                       onChange={(e) => setInputValue(e.target.value)}
@@ -3350,11 +3339,11 @@ const App = () => {
                </div>
 
                {/* FILTERS – GLASS PANEL */}
-               <div className="mb-6 sticky top-24 z-30">
+               <div className="mb-4 sm:mb-6 sticky top-20 sm:top-24 z-30">
                  <div
                    className={`
                      flex flex-col gap-3
-                     rounded-2xl border px-4 py-3 md:px-5 md:py-4
+                     rounded-xl sm:rounded-2xl border px-3 py-2.5 sm:px-4 sm:py-3 md:px-5 md:py-4
                      backdrop-blur-2xl
                      shadow-[0_8px_40px_rgba(0,0,0,0.5)]
                      bg-gradient-to-b from-white/[0.06] to-white/[0.02]
@@ -3654,7 +3643,7 @@ const App = () => {
               </div>
 
                {/* Recipe Cards */}
-               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pb-20 lg:pb-8">
+               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pb-24 lg:pb-8">
                   {paginatedRecipes.map((recipe, index) => {
                     const isCookable = recipe.missing.length === 0;
                     const isLeftColumn = index % 2 === 0;
@@ -3696,7 +3685,7 @@ const App = () => {
                         aria-label={`View recipe: ${recipe.title}`}
                       >
                          
-                         <div className="h-52 relative overflow-hidden bg-slate-900/50">
+                         <div className="h-48 sm:h-52 relative overflow-hidden bg-slate-900/50">
                             <RecipeImage
                               recipe={recipe}
                               className="relative w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
@@ -3730,7 +3719,7 @@ const App = () => {
                                     <span className="text-[9px] font-semibold uppercase tracking-wider bg-black/40 px-2.5 py-1 rounded-full backdrop-blur-md border border-white/10">{recipe.cuisine}</span>
                                     {isCookable && <span className="text-[9px] font-semibold uppercase tracking-wider bg-emerald-500/90 px-2.5 py-1 rounded-full flex items-center gap-1 shadow-lg shadow-emerald-500/20"><CheckCircle2 size={10} strokeWidth={2.5}/> Ready</span>}
                                   </div>
-                                  <h3 className="font-bold text-base sm:text-lg leading-snug drop-shadow-lg">{recipe.title}</h3>
+                                  <h3 className="font-bold text-sm sm:text-base md:text-lg leading-snug drop-shadow-lg">{recipe.title}</h3>
                                   {mounted && recipeRatings[recipe.id]?.rating && (
                                     <div className="flex items-center gap-1 mt-1">
                                       <span className="text-yellow-400 text-xs">★</span>
@@ -3741,9 +3730,9 @@ const App = () => {
                             </div>
                          </div>
 
-                         <div className="p-5 flex-grow flex flex-col">
+                         <div className="p-4 sm:p-5 flex-grow flex flex-col">
                             {/* stats */}
-                            <div className="flex items-center gap-2 sm:gap-3 text-xs font-medium mb-5 flex-wrap">
+                            <div className="flex items-center gap-2 sm:gap-3 text-[11px] sm:text-xs font-medium mb-4 sm:mb-5 flex-wrap">
                               <span className="flex items-center gap-1.5 text-slate-200 bg-white/[0.05] px-2.5 py-1 rounded-lg">
                                 <Clock size={13} className="text-orange-400" />
                                 {recipe.time}
@@ -4048,14 +4037,10 @@ const App = () => {
 
       {/* MOBILE DOCK NAV */}
       {mounted && (
-        <div className="lg:hidden fixed inset-x-0 bottom-0 z-50 flex justify-center pb-2 pointer-events-none">
-          <div className="w-full max-w-sm px-2">
-            <Dock
+        <div className="lg:hidden fixed inset-x-0 bottom-0 z-50 flex justify-center pb-3 pointer-events-none">
+          <div className="w-full max-w-md px-4">
+            <MobileDock
               items={mobileDockItems}
-              panelHeight={52}
-              baseItemSize={38}
-              magnification={52}
-              distance={100}
               className="pointer-events-auto"
             />
           </div>

@@ -77,56 +77,62 @@ export default function CookieConsent() {
       aria-labelledby="cookie-consent-title"
       aria-modal="true"
     >
-      <div className="max-w-5xl mx-auto bg-slate-900/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl p-3 sm:p-4">
+      <div className="max-w-5xl mx-auto bg-slate-900/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl p-4 sm:p-5">
         {!showSettings ? (
           <>
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center flex-shrink-0">
-                <Cookie size={16} className="text-orange-400" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
-                  <h2 id="cookie-consent-title" className="text-sm font-bold text-slate-200">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
+              <div className="flex items-start gap-3 flex-1 min-w-0 w-full sm:w-auto">
+                <div className="w-10 h-10 sm:w-8 sm:h-8 rounded-lg bg-orange-500/20 flex items-center justify-center flex-shrink-0">
+                  <Cookie size={18} className="sm:w-4 sm:h-4 text-orange-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h2 id="cookie-consent-title" className="text-sm sm:text-base font-bold text-slate-200 mb-1.5 sm:mb-1">
                     Cookie Consent
                   </h2>
-                  <span className="text-xs text-slate-500">•</span>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs sm:text-sm text-slate-400 leading-relaxed mb-2 sm:mb-0">
                     We use cookies to enhance your experience. By clicking "Accept All", you consent to our use of cookies.
                   </p>
+                  <div className="flex items-center gap-2 text-[10px] sm:text-xs text-slate-500">
+                    <a href="/privacy" className="text-orange-400 hover:text-orange-300 underline">
+                      Privacy Policy
+                    </a>
+                    <span>•</span>
+                    <a href="/terms" className="text-orange-400 hover:text-orange-300 underline">
+                      Terms of Service
+                    </a>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 text-[10px] text-slate-500">
-                  <a href="/privacy" className="text-orange-400 hover:text-orange-300 underline">
-                    Privacy Policy
-                  </a>
-                  <span>•</span>
-                  <a href="/terms" className="text-orange-400 hover:text-orange-300 underline">
-                    Terms of Service
-                  </a>
-                </div>
+                <button
+                  onClick={() => setIsVisible(false)}
+                  className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-all flex-shrink-0 sm:hidden"
+                  aria-label="Close cookie consent"
+                >
+                  <X size={18} />
+                </button>
               </div>
-              <div className="flex items-center gap-2 flex-shrink-0">
+              <div className="flex items-center gap-2 flex-shrink-0 w-full sm:w-auto">
                 <button
                   onClick={handleAcceptAll}
-                  className="px-3 py-1.5 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-lg font-semibold text-xs hover:from-orange-600 hover:to-red-700 transition-all whitespace-nowrap"
+                  className="flex-1 sm:flex-none px-4 py-2.5 sm:px-3 sm:py-1.5 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-lg font-semibold text-sm sm:text-xs hover:from-orange-600 hover:to-red-700 transition-all whitespace-nowrap"
                 >
                   Accept All
                 </button>
                 <button
                   onClick={() => setShowSettings(true)}
-                  className="px-3 py-1.5 bg-white/10 text-slate-200 rounded-lg font-semibold text-xs border border-white/20 hover:bg-white/20 transition-all flex items-center gap-1.5 whitespace-nowrap"
+                  className="flex-1 sm:flex-none px-4 py-2.5 sm:px-3 sm:py-1.5 bg-white/10 text-slate-200 rounded-lg font-semibold text-sm sm:text-xs border border-white/20 hover:bg-white/20 transition-all flex items-center justify-center gap-1.5 whitespace-nowrap"
                 >
-                  <Settings size={14} />
-                  Customize
+                  <Settings size={16} className="sm:w-3.5 sm:h-3.5" />
+                  <span className="sm:hidden">Customize</span>
                 </button>
                 <button
                   onClick={handleRejectAll}
-                  className="px-3 py-1.5 bg-white/5 text-slate-300 rounded-lg font-semibold text-xs border border-white/10 hover:bg-white/10 transition-all whitespace-nowrap"
+                  className="flex-1 sm:flex-none px-4 py-2.5 sm:px-3 sm:py-1.5 bg-white/5 text-slate-300 rounded-lg font-semibold text-sm sm:text-xs border border-white/10 hover:bg-white/10 transition-all whitespace-nowrap"
                 >
                   Reject All
                 </button>
                 <button
                   onClick={() => setIsVisible(false)}
-                  className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-all"
+                  className="hidden sm:block p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-all"
                   aria-label="Close cookie consent"
                 >
                   <X size={16} />
