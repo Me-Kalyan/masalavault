@@ -1469,28 +1469,28 @@ const App = () => {
       {
         label: 'Home',
         color: 'orange',
-        icon: <Home size={20} />,
+        icon: <Home size={24} />,
         onClick: () => setCurrentView('home'),
         isActive: currentView === 'home',
       },
       {
         label: 'Saved',
-        color: 'red',
-        icon: <Heart size={20} fill={currentView === 'saved' ? 'currentColor' : 'none'} />,
+        color: 'orange',
+        icon: <Heart size={24} fill={currentView === 'saved' ? 'currentColor' : 'none'} />,
         onClick: () => setCurrentView('saved'),
         isActive: currentView === 'saved',
       },
       {
         label: 'History',
-        color: 'blue',
-        icon: <History size={20} />,
+        color: 'orange',
+        icon: <History size={24} />,
         onClick: () => setCurrentView('history'),
         isActive: currentView === 'history',
       },
       {
         label: 'List',
-        color: 'green',
-        icon: <ClipboardList size={20} />,
+        color: 'orange',
+        icon: <ClipboardList size={24} />,
         onClick: () => setCurrentView('shopping'),
         isActive: currentView === 'shopping',
       },
@@ -2440,10 +2440,8 @@ const App = () => {
         <div
           className="relative grid lg:grid-cols-12 gap-4 md:gap-6"
           style={{
-            WebkitMaskImage:
-              'linear-gradient(to bottom, transparent 0, black 24px, black 100%)',
-            maskImage:
-              'linear-gradient(to bottom, transparent 0, black 24px, black 100%)',
+            WebkitMaskImage: 'none',
+            maskImage: 'none',
           }}
         >
           {/* VIEW: ABOUT / LANDING PAGE */}
@@ -3317,25 +3315,86 @@ const App = () => {
 
             {/* RIGHT COLUMN: RECIPE GRID */}
             <div className="lg:col-span-8 col-span-12">
-               {/* Mobile Pantry Input */}
+               {/* Mobile Pantry Section */}
                <div className="lg:hidden mb-4">
-                 <div className="p-3 rounded-xl border flex gap-2 bg-white/[0.04] border-white/[0.08] backdrop-blur-xl">
-                    <input 
-                      value={inputValue}
-                      onChange={(e) => setInputValue(e.target.value)}
-                      onKeyDown={(e) => e.key === 'Enter' && addIngredient(inputValue)}
-                      placeholder="Add ingredients..."
-                      className="flex-1 bg-transparent focus:outline-none text-sm placeholder-slate-500"
-                    />
-                    <button onClick={() => addIngredient(inputValue)} className="text-orange-400 font-semibold px-3 text-sm">Add</button>
-                 </div>
-                 {myPantry.length > 0 && (
-                   <div className="flex gap-1.5 overflow-x-auto py-2.5 no-scrollbar">
-                      {myPantry.map(ing => (
-                        <span key={ing} className="flex-shrink-0 px-3 py-1.5 rounded-lg text-[11px] font-medium bg-orange-500/10 border border-orange-500/20 text-orange-200 capitalize">{ing}</span>
-                      ))}
+                 <div className="p-4 rounded-xl border bg-white/[0.04] border-white/[0.08] backdrop-blur-xl">
+                   <h2 className="font-bold flex items-center gap-2 mb-4 text-base">
+                     <div className="p-1.5 rounded-lg bg-gradient-to-br from-orange-500/20 to-red-500/20 ring-1 ring-orange-500/30">
+                       <ShoppingBag className="text-orange-400" size={16}/>
+                     </div>
+                     Your Pantry
+                   </h2>
+                   
+                   <div className="flex gap-2 mb-4">
+                     <input 
+                       value={inputValue}
+                       onChange={(e) => setInputValue(e.target.value)}
+                       onKeyDown={(e) => e.key === 'Enter' && addIngredient(inputValue)}
+                       placeholder="Add ingredients..."
+                       className="flex-1 px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-orange-500/40 transition-all bg-black/30 border-white/[0.08] text-white placeholder-slate-500 text-sm"
+                     />
+                     <button 
+                       onClick={() => addIngredient(inputValue)} 
+                       className="px-3 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg shadow-lg shadow-orange-500/25 transition-all active:scale-95 font-medium text-sm flex items-center gap-1.5"
+                       aria-label="Add ingredient to pantry"
+                     >
+                       <Plus size={16}/>
+                     </button>
                    </div>
-                 )}
+
+                   {/* Quick Add Pills */}
+                   <div className="mb-4">
+                     <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-500 mb-2">Quick Add</p>
+                     <div className="flex flex-wrap gap-1.5">
+                       {COMMON_INGREDIENTS.slice(0, 12).map(ing => (
+                         <button 
+                           key={ing} 
+                           onClick={() => addIngredient(ing)} 
+                           disabled={myPantry.includes(ing.toLowerCase())} 
+                           className="px-2.5 py-1.5 text-[11px] font-medium rounded-lg border transition-all bg-white/[0.03] border-white/[0.06] active:bg-white/[0.08] active:border-white/[0.12] disabled:opacity-20 disabled:cursor-not-allowed text-slate-300 touch-manipulation"
+                           aria-label={`Add ${ing} to pantry`}
+                           aria-disabled={myPantry.includes(ing.toLowerCase())}
+                         >
+                           + {ing}
+                         </button>
+                       ))}
+                     </div>
+                   </div>
+
+                   {/* In Pantry List */}
+                   <div className="border-t pt-3 border-white/[0.06]">
+                     <div className="flex justify-between items-center mb-2">
+                       <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-500">In Pantry <span className="text-orange-400">({myPantry.length})</span></span>
+                       {myPantry.length > 0 && (
+                         <button 
+                           onClick={() => setMyPantry([])} 
+                           className="text-[10px] text-red-400/80 active:text-red-400 transition-colors font-medium"
+                           aria-label="Clear all pantry items"
+                         >
+                           Clear All
+                         </button>
+                       )}
+                     </div>
+                     {myPantry.length > 0 ? (
+                       <div className="flex flex-wrap gap-1.5">
+                         {myPantry.map(ing => (
+                           <span key={ing} className="group inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-medium bg-gradient-to-r from-orange-500/10 to-orange-500/5 border border-orange-500/20 text-orange-200">
+                             <span className="capitalize">{ing}</span> 
+                             <button 
+                               onClick={() => setMyPantry(p => p.filter(i => i !== ing))} 
+                               className="opacity-50 group-hover:opacity-100 active:text-red-400 transition-all touch-manipulation"
+                               aria-label={`Remove ${ing} from pantry`}
+                             >
+                               <X size={12}/>
+                             </button>
+                           </span>
+                         ))}
+                       </div>
+                     ) : (
+                       <p className="text-slate-500 text-xs py-2">Your pantry is empty. Add ingredients above.</p>
+                     )}
+                   </div>
+                 </div>
                </div>
 
                {/* FILTERS – GLASS PANEL */}
@@ -3353,17 +3412,17 @@ const App = () => {
                    {/* Top row: Course tabs + toggles */}
                    <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                      {/* Course tabs */}
-                     <div className="flex w-full md:w-auto overflow-x-auto gap-1.5 no-scrollbar">
+                     <div className="flex w-full md:w-auto overflow-x-auto gap-1.5 pb-2 -mx-1 px-1 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
                        {COURSE_FILTERS.map(({ value, label }) => (
                          <button
                            key={value}
                            onClick={() => setActiveCourse(value)}
                            className={`
-                             px-4 py-2 rounded-xl text-[13px] font-medium whitespace-nowrap
-                             transition-all duration-200
+                             px-4 py-2 rounded-xl text-[13px] font-medium whitespace-nowrap snap-start flex-shrink-0
+                             transition-all duration-200 touch-manipulation
                              ${activeCourse === value
                                ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md shadow-orange-500/30'
-                               : 'text-slate-300 hover:bg-white/[0.08] hover:text-white'
+                               : 'text-slate-300 active:bg-white/[0.08] active:text-white'
                              }
                            `}
                          >

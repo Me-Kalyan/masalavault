@@ -19,7 +19,7 @@ interface MobileDockProps {
 export default function MobileDock({ items, className = '' }: MobileDockProps) {
   return (
     <div className={`w-full ${className}`}>
-      <div className="bg-slate-900/90 backdrop-blur-2xl border border-white/10 rounded-3xl px-5 py-4 shadow-2xl">
+      <div className="bg-slate-900/90 backdrop-blur-2xl border border-white/10 rounded-3xl px-3 py-3.5 shadow-2xl">
         <GlassIcons items={items} />
       </div>
     </div>
