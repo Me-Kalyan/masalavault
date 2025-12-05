@@ -1,54 +1,30 @@
 'use client';
 
-import React from 'react';
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  useTransform,
-  AnimatePresence,
-} from 'motion/react';
-import {
-  Children,
-  cloneElement,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'motion/react';
+import { Children, cloneElement, useEffect, useMemo, useRef, useState } from 'react';
 
-function DockItem({
-  children,
-  className = '',
-  onClick,
-  mouseX,
-  spring,
-  distance,
-  magnification,
-  baseItemSize,
-}: any) {
+function DockItem({ children, className = '', onClick, mouseX, spring, distance, magnification, baseItemSize }: any) {
   const ref = useRef<HTMLDivElement | null>(null);
   const isHovered = useMotionValue(0);
+
   const mouseDistance = useTransform(mouseX, (val: number) => {
     const rect =
-      ref.current?.getBoundingClientRect() ?? ({
+      ref.current?.getBoundingClientRect() ?? {
         x: 0,
-        width: baseItemSize,
-      } as DOMRect);
+        width: baseItemSize
+      };
     return val - rect.x - baseItemSize / 2;
   });
-  const targetSize = useTransform(
-    mouseDistance,
-    [-distance, 0, distance],
-    [baseItemSize, magnification, baseItemSize]
-  );
+
+  const targetSize = useTransform(mouseDistance, [-distance, 0, distance], [baseItemSize, magnification, baseItemSize]);
   const size = useSpring(targetSize, spring);
+
   return (
     <motion.div
       ref={ref}
       style={{
         width: size,
-        height: size,
+        height: size
       }}
       onHoverStart={() => isHovered.set(1)}
       onHoverEnd={() => isHovered.set(0)}
@@ -60,9 +36,7 @@ function DockItem({
       role="button"
       aria-haspopup="true"
     >
-      {Children.map(children, (child: any) =>
-        cloneElement(child, { isHovered })
-      )}
+      {Children.map(children, (child: any) => cloneElement(child, { isHovered }))}
     </motion.div>
   );
 }
@@ -70,12 +44,14 @@ function DockItem({
 function DockLabel({ children, className = '', ...rest }: any) {
   const { isHovered } = rest;
   const [isVisible, setIsVisible] = useState(false);
+
   useEffect(() => {
     const unsubscribe = isHovered.on('change', (latest: number) => {
       setIsVisible(latest === 1);
     });
     return () => unsubscribe();
   }, [isHovered]);
+
   return (
     <AnimatePresence>
       {isVisible && (
@@ -96,11 +72,7 @@ function DockLabel({ children, className = '', ...rest }: any) {
 }
 
 function DockIcon({ children, className = '' }: any) {
-  return (
-    <div className={`flex items-center justify-center ${className}`}>
-      {children}
-    </div>
-  );
+  return <div className={`flex items-center justify-center ${className}`}>{children}</div>;
 }
 
 interface DockProps {
@@ -114,7 +86,7 @@ interface DockProps {
   baseItemSize?: number;
 }
 
-function DockComponent({
+export default function Dock({
   items,
   className = '',
   spring = { mass: 0.1, stiffness: 150, damping: 12 },
@@ -122,21 +94,20 @@ function DockComponent({
   distance = 200,
   panelHeight = 64,
   dockHeight = 256,
-  baseItemSize = 50,
+  baseItemSize = 50
 }: DockProps) {
   const mouseX = useMotionValue(Infinity);
   const isHovered = useMotionValue(0);
+
   const maxHeight = useMemo(
     () => Math.max(dockHeight, magnification + magnification / 2 + 4),
     [magnification, dockHeight]
   );
   const heightRow = useTransform(isHovered, [0, 1], [panelHeight, maxHeight]);
   const height = useSpring(heightRow, spring);
+
   return (
-    <motion.div
-      style={{ height, scrollbarWidth: 'none' }}
-      className="flex max-w-full items-center"
-    >
+    <motion.div style={{ height, scrollbarWidth: 'none' }} className="flex max-w-full items-center justify-center">
       <motion.div
         onMouseMove={({ pageX }) => {
           isHovered.set(1);
@@ -146,7 +117,7 @@ function DockComponent({
           isHovered.set(0);
           mouseX.set(Infinity);
         }}
-        className={`${className} flex items-end w-fit gap-4 rounded-2xl border-neutral-700 border-2 bg-[#060010]/90 px-4 pb-2 shadow-xl backdrop-blur`}
+        className={`${className} flex items-end w-fit gap-2 sm:gap-4 rounded-2xl border-neutral-700 border-2 pb-2 px-3 sm:px-4 bg-[#060010]/95 backdrop-blur-xl`}
         style={{ height: panelHeight }}
         role="toolbar"
         aria-label="Application dock"
@@ -170,5 +141,3 @@ function DockComponent({
     </motion.div>
   );
 }
-
-export default React.memo(DockComponent);

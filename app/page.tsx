@@ -2132,7 +2132,7 @@ const App = () => {
       <header className="fixed top-0 left-0 right-0 z-40 px-3 sm:px-4 md:px-6 pt-3 sm:pt-4 pointer-events-none">
         <div
           className={`
-            max-w-7xl mx-auto flex items-center justify-between gap-3 md:gap-5
+            max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-3 md:gap-5
             rounded-2xl border px-4 md:px-6 py-2.5
             transition-all duration-300 ease-out
             backdrop-blur-2xl bg-gradient-to-r from-white/[0.07] to-white/[0.04] border-white/[0.08]
@@ -2147,8 +2147,8 @@ const App = () => {
             className="flex items-center gap-2 cursor-pointer"
             onClick={() => setCurrentView('home')}
           >
-            <div className="bg-gradient-to-tr from-orange-500 to-red-600 p-2.5 rounded-2xl text-white shadow-lg shadow-orange-500/30 ring-1 ring-white/10">
-              <ChefHat size={24} strokeWidth={2.5} />
+            <div className="bg-gradient-to-tr from-orange-500 to-red-600 p-2 sm:p-2.5 rounded-xl sm:rounded-2xl text-white shadow-lg shadow-orange-500/30 ring-1 ring-white/10">
+              <ChefHat size={20} className="sm:w-6 sm:h-6" strokeWidth={2.5} />
             </div>
             <div className="leading-tight hidden sm:block">
               <h1 className="text-xl font-bold tracking-tight cal-sans-regular bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
@@ -2446,7 +2446,7 @@ const App = () => {
         "
       />
       {/* MAIN CONTENT */}
-      <main id="main-content" className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 pb-20 pt-28 font-sans text-slate-200" role="main" aria-label="Main content">
+      <main id="main-content" className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 pb-24 lg:pb-20 pt-20 sm:pt-24 md:pt-28 font-sans text-slate-200" role="main" aria-label="Main content">
         {/* This wrapper applies the fade ONLY to the content */}
         <div
           className="relative grid lg:grid-cols-12 gap-4 md:gap-6"
@@ -3654,7 +3654,7 @@ const App = () => {
               </div>
 
                {/* Recipe Cards */}
-               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pb-8">
+               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pb-20 lg:pb-8">
                   {paginatedRecipes.map((recipe, index) => {
                     const isCookable = recipe.missing.length === 0;
                     const isLeftColumn = index % 2 === 0;
@@ -4048,14 +4048,17 @@ const App = () => {
 
       {/* MOBILE DOCK NAV */}
       {mounted && (
-        <div className="lg:hidden fixed inset-x-0 bottom-0 z-50 flex justify-center pb-3 pointer-events-none">
-          <Dock
-            items={mobileDockItems}
-            panelHeight={64}
-            baseItemSize={44}
-            magnification={64}
-            className="pointer-events-auto"
-          />
+        <div className="lg:hidden fixed inset-x-0 bottom-0 z-50 flex justify-center pb-2 pointer-events-none">
+          <div className="w-full max-w-sm px-2">
+            <Dock
+              items={mobileDockItems}
+              panelHeight={52}
+              baseItemSize={38}
+              magnification={52}
+              distance={100}
+              className="pointer-events-auto"
+            />
+          </div>
         </div>
       )}
 
