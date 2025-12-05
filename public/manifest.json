@@ -4,8 +4,8 @@
   "description": "Your Spice Vault, Your Recipes - Indian Cooking Companion",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#050010",
-  "theme_color": "#f97316",
+  "background_color": "#ffffff",
+  "theme_color": "#2563ef",
   "orientation": "portrait-primary",
   "icons": [
     {
