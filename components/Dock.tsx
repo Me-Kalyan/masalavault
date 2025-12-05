@@ -29,7 +29,7 @@ function DockItem({
 }: any) {
   const ref = useRef<HTMLDivElement | null>(null);
   const isHovered = useMotionValue(0);
-  const mouseDistance = useTransform(mouseX, (val) => {
+  const mouseDistance = useTransform(mouseX, (val: number) => {
     const rect =
       ref.current?.getBoundingClientRect() ?? ({
         x: 0,

@@ -2929,6 +2929,7 @@ const App = () => {
                   const recipe = recipes.find(r => r.id === id);
                   if (!recipe) return null;
                   const nutrition = recipe.nutrition || getNutritionEstimate(recipe);
+                  if (!nutrition) return null;
                   return (
                     <div key={id} className="p-5 rounded-2xl border backdrop-blur-2xl bg-white/5 border-white/10">
                       <h3 className="font-semibold text-lg mb-3">{recipe.title}</h3>
